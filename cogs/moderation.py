@@ -16,15 +16,18 @@ class Moderation(commands.Cog):
         if member.top_role > ctx.author.top_role:
             embed = discord.Embed(title="Nice try! You can't ban a higher up role.")
             await ctx.send(embed=embed)
+        elif member.top_role == ctx.author.top_role:
+            embed = discord.Embed(title="Nice try! You can't kick a same rank.")
+            await ctx.send(embed=embed) 
         elif member == ctx.author:
             embed = discord.Embed(title=":x: You cannot ban yourself! If you are feeling/having suicidal/self-harm thoughts, visit https://en.wikipedia.org/wiki/List_of_suicide_crisis_lines")
             await ctx.send(embed=embed)
-            
-        await member.ban()
-        embed = discord.Embed(title=f":white_check_mark: {member} was banned; {reason}.")
-        await ctx.send(embed=embed)
-        channel = await member.create_dm()
-        await channel.send(f'You were banned in {ctx.guild.name} for {reason}.')
+        else:   
+            await member.ban()
+            embed = discord.Embed(title=f":white_check_mark: {member} was banned; {reason}.")
+            await ctx.send(embed=embed)
+            channel = await member.create_dm()
+            await channel.send(f'You were banned in {ctx.guild.name} for {reason}.')
 
     @commands.command(name="unban")
     @commands.has_guild_permissions(ban_members=True)
@@ -43,14 +46,11 @@ class Moderation(commands.Cog):
             await member.unban()
             embed = discord.Embed(title=f"{member} was unbanned; {reason}")
             await ctx.send(embed=embed)
+            channel = await member.create_dm()
+            await channel.send(f'You were unbanned in {ctx.guild.name} for {reason}.')
         elif member == None:
             embed = discord.Embed(title=":x: You need to sepcify a user!")
-            await ctx.send(embed=embed)  
-    
-        embed = discord.Embed(title=f"{member} is not banned.")
-        await ctx.send(embed=embed)
-        channel = await member.create_dm()
-        await channel.send(f'You were unbanned in {ctx.guild.name} for {reason}.')
+            await ctx.send(embed=embed) 
 
 
     @commands.command(name="mute")
@@ -64,15 +64,19 @@ class Moderation(commands.Cog):
         if member.top_role > ctx.author.top_role:
             embed = discord.Embed(title="Nice try! You can't mute a higher up role.")
             await ctx.send(embed=embed)
+        elif member.top_role == ctx.author.top_role:
+            embed = discord.Embed(title="Nice try! You can't mute a same rank.")
+            await ctx.send(embed=embed) 
         elif member == ctx.author:
             embed = discord.Embed(title=":x: You cannot mute yourself! If you are feeling/having suicidal/self-harm thoughts, visit https://en.wikipedia.org/wiki/List_of_suicide_crisis_lines")
             await ctx.send(embed=embed)       
         elif not discord.utils.get(name="Muted", permissions=discord.Permissions(send_messages=True, manage_messages=False)):
             await ctx.create_role(name="Muted", permissions=discord.Permissions(send_messages=True, manage_messages=False))
             await ctx.add_roles(name="Muted", reason="Muted")
-        
-        channel = await member.create_dm()
-        await channel.send(f'You were muted in {ctx.guild.name} for {reason}.')
+            channel = await member.create_dm()
+            await channel.send(f'You were muted in {ctx.guild.name} for {reason}.')
+            embed = discord.Embed(title=f":white_check_mark: {member} was muted; {reason}.")
+            await ctx.send(embed=embed)
 
    
     @commands.command(name="unmute")
@@ -82,19 +86,13 @@ class Moderation(commands.Cog):
     async def unmute(self, ctx, member: discord.Member, reason):
         """
         Unmutes a user
-        """
-        if member.top_role > ctx.author.top_role:
-            embed = discord.Embed(title="Nice try! You can't mute a higher up role.")
-            await ctx.send(embed=embed)
-        elif member == ctx.author:
-            embed = discord.Embed(title=":x: You cannot mute yourself! If you are feeling/having suicidal/self-harm thoughts, visit https://en.wikipedia.org/wiki/List_of_suicide_crisis_lines")
-            await ctx.send(embed=embed)       
-        elif not discord.utils.get(name="Muted", permissions=discord.Permissions(send_messages=True, manage_messages=False)):
-            await ctx.create_role(name="Muted", permissions=discord.Permissions(send_messages=True, manage_messages=False))
-            await ctx.remove_roles(name="Muted", reason="Unmuted")
-        
+        """   
+        await discord.utils.get(name="Muted", permissions=discord.Permissions(send_messages=True, manage_messages=False))
+        await ctx.remove_roles(name="Muted", reason="Unmuted")
         channel = await member.create_dm()
         await channel.send(f'You were unmuted in {ctx.guild.name} for {reason}.')
+        embed = discord.Embed(title=f":white_check_mark: {member} was unmuted; {reason}.")
+        await ctx.send(embed=embed)
 
 
     @commands.command(name="kick")
@@ -108,15 +106,18 @@ class Moderation(commands.Cog):
         if member.top_role > ctx.author.top_role:
             embed = discord.Embed(title="Nice try! You can't kick a higher up role.")
             await ctx.send(embed=embed) 
+        elif member.top_role == ctx.author.top_role:
+            embed = discord.Embed(title="Nice try! You can't kick a same rank.")
+            await ctx.send(embed=embed) 
         elif member == ctx.author:
             embed = discord.Embed(title=":x: You cannot kick yourself! If you are feeling/having suicidal/self-harm thoughts, visit https://en.wikipedia.org/wiki/List_of_suicide_crisis_lines")
             await ctx.send(embed=embed)
-        
-        await member.kick()
-        embed = discord.Embed(title=f":white_check_mark: {member} was kicked; {reason}.")
-        await ctx.send(embed=embed)
-        channel = await member.create_dm()
-        await channel.send(f'You were kicked in {ctx.guild.name} for {reason}.')
+        else:
+            await member.kick()
+            embed = discord.Embed(title=f":white_check_mark: {member} was kicked; {reason}.")
+            await ctx.send(embed=embed)
+            channel = await member.create_dm()
+            await channel.send(f'You were kicked in {ctx.guild.name} for {reason}.')
 
     @commands.command(name="warn")
     @commands.has_permissions(manage_messages=True)
@@ -131,22 +132,26 @@ class Moderation(commands.Cog):
         elif member == ctx.author:
             embed = discord.Embed(title=":x: You cannot warn yourself! If you are feeling/having suicidal/self-harm thoughts, visit https://en.wikipedia.org/wiki/List_of_suicide_crisis_lines")
             return await ctx.send(embed=embed)
-        await ctx.channel.send(f"{member} was warned; {reason}.")
-        try:
-          await member.send(f'You were warned in {ctx.guild.name} for {reason}.')
-        except:
-          return
+        else:
+            await ctx.channel.send(f"{member} was warned; {reason}.")
+            try:
+                await member.send(f'You were warned in {ctx.guild.name} for {reason}.')
+            except:
+                return
 
     @commands.command(name="purge")
     @commands.bot_has_guild_permissions(manage_roles=True)
     @commands.cooldown(1, 3, commands.BucketType.user)
-    async def purge(self, ctx, amount = 25):
+    async def purge(self, ctx, amount):
         """
         Mass deletes any messages. Cannot delete more then 100 nor old messages (as in messages that are older then 14 days)
         """
-        await ctx.channel.purge(limit = amount + 1)
-        embed = discord.Embed(title=f"I successfully deleted {amount} of messages.")
-        await ctx.send(embed=embed)
+        if amount > 100:
+            embed = discord.Embed(title=f"You cannot delete more than 100 messages!")
+        else:
+            await ctx.channel.purge(limit = amount)
+            embed = discord.Embed(title=f"I successfully deleted {amount} of messages.")
+            await ctx.send(embed=embed)
             
 
     @commands.Cog.listener()
