@@ -11,33 +11,6 @@ import discordlists
 class Owner(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.api = discordlists.Client(self.bot)  # Create a Client instance
-        self.api.set_auth("discordbotlist.com", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6IjczNDgyMjUxNDg5NDgzMTYzOSIsImlhdCI6MTU5ODYwMjY1NH0.fHfVHx9HM6Rh9u3C1R2U3HBjVdwQO7Qb0FTDeFfsHqw") # Set authorisation token for a bot list
-        self.api.set_auth("discord.boats", "e0U24Er1CkNgJGr0sHxhtwaFmdVQhj8S19PBVO0VDBNVEerrSMrswmHWloqybrCE7HaqSES4lF2xOzSuKDjepj8V78tRoBcl99pgCzH5XC2NhLoOc40DGoj7zizTS8QsM4Dc5CmTIuyJ1N7s2y9o0BJDuJy")
-        self.api.set_auth("botlist.space", "21e50a2dc17108531e8f0471afca5e0bd121656a860a994029905d982859ee74f85dd160ac76d9a4d0a0e831235b1a90")
-        self.api.set_auth("discordextremelist.xyz", "DELAPI_23c265e915080ebaf6bf4317df281bf4-734822514894831639")
-        self.api.set_auth("glennbotlist.xyz", "GBL_5a6c7dfee5d243b98be3aa43a83facb0b4e3e39877cc43d59a208873b78f26af6d5a3c9dab8d438ca339e4ce86b32820")
-        self.api.set_auth("disforge.com", "df36c16767a13fadebc5b0a60bd3cfdbf385d307777ef4685ef0bd046642e8b5")
-        self.api.set_auth("discordlabs.org", "discordlabs.org-WUJGI1CAJFed4GPHQqwr")
-        self.api.set_auth("discord.bots.gg", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOnRydWUsImlkIjoiNTQxODcyNjcwMzcxNzQxNjk3IiwiaWF0IjoxNTk4ODk3NDg4fQ.aj8LgxfH_haWSJIFMuEU_avjgKZlhMX8dgtFc-lZJ2A")
-        self.api.start_loop()  # Posts the server count automatically every 30 minutes
-
-    @commands.command(name="post")
-    @commands.is_owner()
-    async def post(self, ctx: commands.Context):
-        """
-        Manually posts guild count using discordlists.py (BotBlock)
-        """
-        try:
-            result = await self.api.post_count()
-        except Exception as e:
-            await ctx.send("Request failed: `{}`".format(e))
-            return
-
-        await ctx.send("Successfully manually posted server count ({:,}) to {:,} lists."
-                       "\nFailed to post server count to {:,} lists.".format(self.api.server_count,
-                                                                             len(result["success"].keys()),
-                                                                             len(result["failure"].keys())))
 
     @commands.command(name='eval')
     @commands.is_owner()
