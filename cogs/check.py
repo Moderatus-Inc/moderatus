@@ -13,7 +13,7 @@ class Premium(commands.Cog):
     
     async def init(self, access_token):
         """Init the Patreon api
-        @param str glFunPTJlZwLrL7YAfW3lOG4N6QZmNJFPTjuWR-Kz0Y
+        @param str
         --
         @return None"""
 
