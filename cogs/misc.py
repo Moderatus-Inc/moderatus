@@ -3,6 +3,7 @@ from discord.ext import commands
 from datetime import datetime
 import traceback
 import sys
+import json
 
 class Misc(commands.Cog):    
     def __init__(self, bot):
@@ -66,14 +67,15 @@ class Misc(commands.Cog):
         embed=discord.Embed(title="About Moderatus", description="Here is my info")
         embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/734822514894831639/bde485834ec5b3351356f045b4dc9655.png?size=128")
         embed.add_field(name="Prefix:", value="`m1/m!`", inline=True)
-        embed.add_field(name="Developer:", value="`MrCatLover#7894`", inline=True)
+        embed.add_field(name="Developer:", value="`MrDragonBoi ඞ#7894`", inline=True)
         embed.add_field(name="Library:", value="`discord.py`", inline=True)
         embed.add_field(name="Servers:", value=f"`{len(self.bot.guilds)}`", inline=True)
-        embed.add_field(name="Version:", value="`v1.0.5`", inline=True)
+        embed.add_field(name="Version:", value="`v1.1`", inline=True)
         embed.add_field(name="Users:", value=f"`{len(self.bot.users)}`", inline=True)
         embed.add_field(name="Support:", value=":star: [Here](https://discord.gg/EyKqRNT)", inline=True)
         embed.add_field(name="Invite:", value=":robot: [Invite](https://discord.com/oauth2/authorize?client_id=734822514894831639&permissions=2134240759&scope=bot)", inline=True) 
         embed.add_field(name="Vote:", value=":white_check_mark: [Vote](https://discord.ly/moderatus/upvote)", inline=True)
+        embed.add_field(name="Donate:", value=":pound: [Donate](https://www.patreon.com/join/moderatus)", inline=True)
         embed.set_footer(text=f"Requested by {ctx.author}", icon_url=f"{ctx.author.avatar_url}")
         await ctx.send(embed=embed)
     
@@ -91,7 +93,7 @@ class Misc(commands.Cog):
         """
         Shows the bot's ping
         """
-        embed=discord.Embed(title="Pong!", description=f'{ctx.bot.latency * 100}ms')
+        embed=discord.Embed(title="Pong!", description=f'{round(ctx.bot.latency * 1000)}ms')
         await ctx.send(embed=embed)
 
     @commands.command(name="serverinfo", aliases=['si'])
@@ -115,12 +117,12 @@ class Misc(commands.Cog):
         """
         (Required under Discord ToS)
         """
-        embed=discord.Embed(title="Moderatus' Privacy Policy", description="Correct at 15/08/2020 British Summer Time")
+        embed=discord.Embed(title="Moderatus' Privacy Policy", description="Correct at 25/09/2020 British Summer Time")
         embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/744111535638446121/744112274364432454/Privacy.png')
         embed.add_field(name="**What data do we collect?**", value="We do not collect nor share any data, except for the serverinfo and/or other commands.", inline=False)
         embed.add_field(name="**What happens if I have a problem?**", value="If you have questions regarding your privacy, this privacy policy or this bot in general you may contact me using one of the forms of contact listed below;", inline=False) 
         embed.add_field(name="• Email -", value="`realuprising2005@gmail.com`", inline=False)
-        embed.add_field(name="• Discord -", value="`MrCatLover#7894 (541872670371741697)`", inline=False)
+        embed.add_field(name="• Discord -", value="`MrDragonBoi ඞ#7894 (541872670371741697)`", inline=False)
         await ctx.send(embed=embed)
     
     @commands.command(name="vote", aliases=['upvote'])
@@ -149,6 +151,30 @@ class Misc(commands.Cog):
         Support server invite
         """
         await ctx.send("https://discord.gg/EyKqRNT")
+
+    @commands.command(name="bugreport")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def bug(self, ctx):
+        """Report bugs directly to the owner!"""
+        channel = self.bot.get_channel(762306208580370464)
+        embed = discord.Embed(title='Bug report!', description='Your bug report, along with your discord name, discriminator, and id were sent to the bot owner. He will look into your report and hopefully fix the issue soon!', colour=discord.Color.green())
+        if channel is not None:
+            await channel.send(f'{ctx.message.content} | User: {ctx.message.author} ID: {ctx.message.author.id}')
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send('Unable to send request.')
+
+    @commands.command(name="suggest")
+    @commands.cooldown(1, 10, commands.BucketType.user)
+    async def suggest(self, ctx):
+        """Suggest features directly to the owner! Make sure you have DMs on and join the server!"""
+        channel = self.bot.get_channel(762306208580370464)
+        embed = discord.Embed(title='Suggestion!', description='Your suggestion, along with your discord name, discriminator, and id were sent to the bot owner. He will look into your report and hopefully add the feature soon!', colour=discord.Color.green())
+        if channel is not None:
+            await channel.send(f'{ctx.message.content} | User: {ctx.message.author} ID: {ctx.message.author.id}')
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send('Unable to send request.')
 
 def setup(bot):
     bot.add_cog(Misc(bot))
