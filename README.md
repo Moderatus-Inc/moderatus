@@ -10,10 +10,13 @@ Moderatus is a discord bot, written in Python that is capable of banning/kicking
 # Contact/Info
 
 Website: https://moderatus.xyz
+
 Discord: https://discord.gg/EyKqRNT
+
 Invite: https://discord.com/oauth2/authorize?client_id=734822514894831639&scope=bot&permissions=2134240759
 
 # My info
 
 Discord: MrDragonBoi ඞ#7894
+
 More coming soon!
