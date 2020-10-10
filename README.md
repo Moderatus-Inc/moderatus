@@ -2,6 +2,7 @@
 The official GitHub repository for Moderatus.
 
 [![Bots for Discord](https://botsfordiscord.com/api/bot/734822514894831639/widget)](https://botsfordiscord.com/bots/734822514894831639)
+[![Discord Bots](https://top.gg/api/widget/734822514894831639.svg)](https://top.gg/bot/734822514894831639)
 
 # What is it?
 
