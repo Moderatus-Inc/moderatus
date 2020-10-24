@@ -63,6 +63,7 @@ Here are some of Moderatus' commands.
 |Invite	    | Shows a link to invite Moderatus         |invite                 |
 |Vote	    | Shows link(s) to vote for Moderatus      |vote                   |
 |Help	    | Shows all commands or usage of one       |help [command]         |
+|News       | Shows all updates for Moderatus.         |news                   |
 
 ---
 
