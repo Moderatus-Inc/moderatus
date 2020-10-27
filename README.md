@@ -1,5 +1,5 @@
 # Moderatus.
-[![Bots for Discord](https://botsfordiscord.com/api/bot/734822514894831639/widget)](https://botsfordiscord.com/bots/734822514894831639)
+[![Bots for Discord](https://botsfordiscord.com/api/bot/734822514894831639/widget?theme=dark)](https://botsfordiscord.com/bots/734822514894831639)
 [![Discord Bots](https://top.gg/api/widget/734822514894831639.svg)](https://top.gg/bot/734822514894831639)
 
 ## Contents
