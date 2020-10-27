@@ -98,7 +98,7 @@ Here are some of Moderatus' commands.
 
 ### Prefix
 
-Moderatus' Prefix is m1 or m!. It can also be mentioned.
+Moderatus' Prefix is m1 or m!. It can also be mentioned. Sadly, due to issues with MongoDB and stuff, I cannot make a custom prefix command yet. If you have a good command that you made, feel free to DM me and I can test it (I'll give credit in the help page <3)
 
 ---
 
