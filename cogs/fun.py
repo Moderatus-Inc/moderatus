@@ -1,9 +1,8 @@
 import discord
 from discord.ext import commands
 import praw
-import random
 
-reddit = praw.Reddit(client_id="secret", client_secret="secret", user_agent="classified lol")
+reddit = praw.Reddit(client_id="vmcx9MPIQRm6bg", client_secret="Zu52ANIOl4c9JgxvBW8Tu11OLXw", user_agent="Moderatus, a discord bot written in discord.py Alpha 1.5 by /u/MrDragonBoi")
 
 class Fun(commands.Cog):
     """Funny commands lol"""
