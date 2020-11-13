@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import asyncio
 from pretty_help import PrettyHelp
 
 def get_prefix(bot, message):
@@ -13,11 +14,11 @@ def get_prefix(bot, message):
 
 intents = discord.Intents.default()
 
-bot = commands.AutoShardedBot(                         
+bot = commands.AutoShardedBot(
     command_prefix=get_prefix,
-    intents=intents,              
+    intents=intents,
     description='A discord.py Moderation + Music bot made by MrDragonBoi ඞ#7894 since July 2020.',
-    owner_id=541872670371741697,            
+    owner_id=541872670371741697,
     case_insensitive=True,
     allowed_mentions=discord.AllowedMentions(roles=False, everyone=False),
     help_command=PrettyHelp()
@@ -40,7 +41,7 @@ async def servers():
 
         await bot.change_presence(activity=discord.Game(name=servers))
 
-@bot.command()  
+@bot.command()
 async def snipe(ctx, *, channel: discord.TextChannel = None):
     channel = channel or ctx.channel
     try:
@@ -51,7 +52,7 @@ async def snipe(ctx, *, channel: discord.TextChannel = None):
     await ctx.send(embed=discord.Embed(description=msg.content, color=msg.author.color).set_author(name=str(msg.author), icon_url=str(msg.author.avatar_url)))
 
 @bot.event
-async def on_ready():                                       
+async def on_ready():
     print(f'Logged in as {bot.user.name} - {bot.user.id}')
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name=f'{len(bot.guilds)} server(s) | m!help or m1help | moderatus.xyz'))
     bot.load_extension("cogs.moderation")
