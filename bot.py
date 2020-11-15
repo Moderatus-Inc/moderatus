@@ -2,20 +2,19 @@ import discord
 from discord.ext import commands
 import asyncio
 from pretty_help import PrettyHelp
+import json
 
-def get_prefix(bot, message):
+def prefix(bot, message):
+    with open("prefixes.json") as f:
+        prefixes = json.load(f)
+        default = ["m!", "m1"]
 
-    prefixes = ['m!', 'm1']
-
-    if not message.guild:
-        prefixes = ['m!']
-    
-    return commands.when_mentioned_or(*prefixes)(bot, message)
+    return commands.when_mentioned_or(*prefixes, *default)(bot, message)
 
 intents = discord.Intents.default()
 
 bot = commands.AutoShardedBot(
-    command_prefix=get_prefix,
+    command_prefix=prefix,
     intents=intents,
     description='A discord.py Moderation + Music bot made by MrDragonBoi ඞ#7894 since July 2020.',
     owner_id=541872670371741697,
@@ -41,8 +40,9 @@ async def servers():
 
         await bot.change_presence(activity=discord.Game(name=servers))
 
-@bot.command()
+@bot.command(name="snipe", pass_context=True)
 async def snipe(ctx, *, channel: discord.TextChannel = None):
+    """👀"""
     channel = channel or ctx.channel
     try:
         msg = bot.snipes[channel.id]
@@ -64,16 +64,49 @@ async def on_ready():
     return
 
 @bot.event
+async def on_guild_join(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    
+    prefixes[str(guild.id)] = ['m1', "m!"]
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@bot.event
+async def on_guild_remove(guild):
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    
+    prefixes.pop[str(guild.id)]
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@bot.command(name="prefix", pass_context=True)
+@commands.guild_only()
+@commands.has_guild_permissions(administrator=True, manage_guild=True)
+async def _prefix(ctx, prefix):
+    """Changes the server's prefix"""
+    with open('prefixes.json', 'r') as f:
+        prefixes = json.load(f)
+    
+    prefixes[str(ctx.guild.id)] = prefix
+
+    with open('prefixes.json', 'w') as f:
+        json.dump(prefixes, f, indent=4)
+
+@bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.NotOwner):
         await ctx.send(f'Nice try! You can\'t use owner commands if you\'re not MrDragonBoi ඞ#7894. He is the only one with the perms.')
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send(f'You don\'t have the required perms for this command.')
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f'You didn\'t specify the right arguments for this command.')
     if isinstance(error, commands.BotMissingPermissions):
-        await ctx.send(f'I don\'t have the perms to preform this action.')
+        await ctx.send(f'I don\'t have the perms to perform this action.')
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f'You don\'t have the perms to perform this action.')
     if isinstance(error, commands.NSFWChannelRequired):
         await ctx.send(f'This command does not work in non-NSFW channels. Apologies')
 
-bot.run('TOKEN', bot=True)
+bot.run('Super duper secret token no looky 👀', bot=True)
