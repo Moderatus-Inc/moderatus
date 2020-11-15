@@ -27,7 +27,7 @@ class Misc(commands.Cog):
         embed.add_field(name="Donate:", value=":pound: [Donate](https://www.patreon.com/join/moderatus)", inline=True)
         embed.add_field(name="Python Version", value=f"`{sys.version}`", inline=True)
         embed.add_field(name="discord.py Version", value=f"`{discord.__version__}`", inline=True)
-        embed.set_footer(text=f"Requested by {ctx.author}", icon_url=f"{ctx.author.avatar_url}")
+        embed.set_footer(text=f"Requested by {ctx.author}",icon_url=f"{ctx.author.avatar_url}")
         await ctx.send(embed=embed)
 
     @commands.command(name="ping")
