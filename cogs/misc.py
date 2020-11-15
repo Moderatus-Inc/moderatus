@@ -109,8 +109,9 @@ class Misc(commands.Cog):
         branch = 'master'
         if command is None:
             return await ctx.send(source_url)
-
-        if command == 'help':
+        elif command == 'developer':
+            await ctx.send('That isn\'t really a command, is it?')
+        elif command == 'help':
             src = type(self.bot.help_command)
             module = src.__module__
             filename = inspect.getsourcefile(src)
