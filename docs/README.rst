@@ -18,8 +18,8 @@ Features
 Contribute
 ----------
 
-- Issue Tracker: github.com/moderatus-inc/moderatus/issues
-- Source Code: github.com/moderatus-inc/moderatus
+- Issue Tracker: https://github.com/moderatus-inc/moderatus/issues
+- Source Code: https://github.com/moderatus-inc/moderatus
 
 Support
 -------
